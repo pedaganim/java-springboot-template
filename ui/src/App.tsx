@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
 import type { User } from './types'
 import { listUsers, createUser, updateUser, deleteUser } from './api'
 
@@ -17,8 +18,11 @@ export default function App() {
         setLoading(true)
         const data = await listUsers()
         setUsers(data)
-      } catch (e: any) {
-        setError(e?.message ?? 'Failed to load users')
+      } catch (e: unknown) {
+        const message = (e && typeof e === 'object' && 'message' in e)
+          ? String((e as { message?: unknown }).message)
+          : 'Failed to load users'
+        setError(message)
       } finally {
         setLoading(false)
       }
@@ -152,7 +156,7 @@ function UserForm({ initial, submitLabel, onSubmit, onCancel }: {
   )
 }
 
-function Modal({ title, children, onClose }: { title: string, children: any, onClose: () => void }) {
+function Modal({ title, children, onClose }: { title: string, children: ReactNode, onClose: () => void }) {
   return (
     <div style={styles.modalBackdrop} onClick={onClose}>
       <div style={styles.modal} onClick={e => e.stopPropagation()}>
