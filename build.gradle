@@ -63,8 +63,7 @@ checkstyle {
 }
 
 tasks.withType(Checkstyle).configureEach {
-    ignoreFailures = true
-    reports { 
+    reports {
         xml.required = false
         html.required = true
     }

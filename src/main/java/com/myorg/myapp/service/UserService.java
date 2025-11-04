@@ -1,6 +1,7 @@
 package com.myorg.myapp.service;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import com.myorg.myapp.model.User;
 import com.myorg.myapp.repository.UserRepository;
