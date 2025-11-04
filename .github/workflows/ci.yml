@@ -34,7 +34,11 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
+          cache-dependency-path: 'package-lock.json'
+      - name: Verify lockfile present
+        run: |
+          pwd
+          ls -l package-lock.json || true
       - name: Install
         run: |
           if [ -f package-lock.json ]; then
