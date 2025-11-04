@@ -1,6 +1,8 @@
 spring:
   application:
     name: java-springboot-template
+  flyway:
+    enabled: true
 
 # Default profile: dev (H2 in-memory)
 ---
@@ -23,7 +25,7 @@ spring:
       path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
 server:
   port: 8080
@@ -41,7 +43,7 @@ spring:
     password: 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: false
 server:
   port: 0
@@ -59,7 +61,7 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD:app}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
 server:
   port: 8080
