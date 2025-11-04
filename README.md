@@ -50,7 +50,7 @@ The UI calls `GET /api/hello` which returns "Hello, World!" from the backend.
 
 ## Swagger / OpenAPI
 - Added via `springdoc-openapi`.
-- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
 - OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
 ## Spring Profiles & Config
