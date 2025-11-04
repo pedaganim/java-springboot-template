@@ -2,6 +2,9 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'com.diffplug.spotless' version '6.25.0'
+    id 'jacoco'
+    id 'checkstyle'
 }
 
 group = 'com.myorg.myapp'
@@ -41,4 +44,52 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
+
+spotless {
+    java {
+        googleJavaFormat()
+        target 'src/*/java/**/*.java'
+        removeUnusedImports()
+    }
+}
+
+checkstyle {
+    toolVersion = '10.18.2'
+    configDirectory = file('config/checkstyle')
+}
+
+tasks.withType(Checkstyle).configureEach {
+    ignoreFailures = true
+    reports { 
+        xml.required = false
+        html.required = true
+    }
+}
+
+jacoco {
+    toolVersion = '0.8.12'
+}
+
+tasks.jacocoTestReport {
+    dependsOn test
+    reports { xml.required = true; html.required = true }
+}
+
+if (tasks.findByName('jacocoTestCoverageVerification') == null) {
+    tasks.register('jacocoTestCoverageVerification', JacocoCoverageVerification) {
+        dependsOn test
+        violationRules {
+            rule {
+                element = 'CLASS'
+                excludes = ['com.myorg.myapp.*Application*']
+                limit { counter = 'LINE'; value = 'COVEREDRATIO'; minimum = 0.75 }
+            }
+        }
+    }
+}
+
+check.dependsOn 'spotlessCheck', 'checkstyleMain', 'checkstyleTest', 'jacocoTestReport', 'jacocoTestCoverageVerification'
