@@ -18,22 +18,25 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  private static final String[] SWAGGER = new String[] {
-      "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html"
-  };
+  private static final String[] SWAGGER =
+      new String[] {"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html"};
 
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(csrf -> csrf.disable())
+    http.csrf(csrf -> csrf.disable())
         .cors(Customizer.withDefaults())
         .headers(h -> h.frameOptions(f -> f.sameOrigin())) // allow H2 console frames in dev
         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers(SWAGGER).permitAll()
-            .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/hello").permitAll()
-            .anyRequest().authenticated())
+        .authorizeHttpRequests(
+            auth ->
+                auth.requestMatchers(SWAGGER)
+                    .permitAll()
+                    .requestMatchers("/h2-console/**")
+                    .permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/hello")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
         .httpBasic(Customizer.withDefaults());
     return http.build();
   }
