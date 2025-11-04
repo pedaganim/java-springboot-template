@@ -32,7 +32,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(SWAGGER).permitAll()
             .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/hello").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/hello").permitAll()
             .anyRequest().authenticated())
         .httpBasic(Customizer.withDefaults());
     return http.build();
