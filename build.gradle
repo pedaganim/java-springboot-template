@@ -10,12 +10,12 @@ plugins {
 group = 'com.myorg.myapp'
 version = '0.0.1-SNAPSHOT'
 java {
-    // Use JDK 25 for toolchain, but compile target to Java 21 for broad plugin compatibility
+    // Use JDK 21 for compilation and target compatibility
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
-    }
 }
 
 configurations {
@@ -38,6 +38,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql:42.7.4'
+    runtimeOnly 'net.logstash.logback:logstash-logback-encoder:7.4'
 
     compileOnly 'org.projectlombok:lombok:1.18.34'
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
