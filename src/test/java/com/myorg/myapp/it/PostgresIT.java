@@ -33,6 +33,7 @@ public abstract class PostgresIT {
       r.add("spring.datasource.url", pg::getJdbcUrl);
       r.add("spring.datasource.username", pg::getUsername);
       r.add("spring.datasource.password", pg::getPassword);
+      r.add("spring.jpa.database-platform", () -> "org.hibernate.dialect.PostgreSQLDialect");
     } else {
       r.add(
           "spring.datasource.url",
@@ -40,6 +41,7 @@ public abstract class PostgresIT {
       r.add("spring.datasource.driverClassName", () -> "org.h2.Driver");
       r.add("spring.datasource.username", () -> "sa");
       r.add("spring.datasource.password", () -> "");
+      r.add("spring.jpa.database-platform", () -> "org.hibernate.dialect.H2Dialect");
     }
     r.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
     r.add("spring.flyway.enabled", () -> "false");
