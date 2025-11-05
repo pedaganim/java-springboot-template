@@ -33,6 +33,7 @@ public abstract class PostgresIT {
       r.add("spring.datasource.url", pg::getJdbcUrl);
       r.add("spring.datasource.username", pg::getUsername);
       r.add("spring.datasource.password", pg::getPassword);
+      r.add("spring.datasource.driverClassName", () -> "org.postgresql.Driver");
       r.add("spring.jpa.database-platform", () -> "org.hibernate.dialect.PostgreSQLDialect");
     } else {
       r.add(
